@@ -1,0 +1,11 @@
+
+---
+
+torch
+torchvision
+torchaudio
+transformers==4.35.0
+pillow
+matplotlib
+pandas
+numpy

@@ -1,0 +1,96 @@
+# Technical Description
+
+## Objective
+
+To generate structured radiology-style medical reports from chest X-ray images using a pre-trained Vision-Language Model (VLM), conditioned on CNN classifier outputs.
+
+---
+
+## Methodology
+
+### 1. Input Source
+
+Misclassified chest X-ray images from Task 1 CNN model:
+- Stored in NumPy format
+- Includes:
+  - Image tensor
+  - True label
+  - Predicted label
+  - Prediction probability
+
+---
+
+### 2. Vision-Language Model
+
+We use the BLIP image captioning model:
+
+Model:
+Salesforce/blip-image-captioning-base
+
+Architecture:
+- Vision Transformer (ViT) image encoder
+- Transformer-based language decoder
+
+Reference:
+Li et al., 2022.
+
+---
+
+### 3. Prompt Conditioning Strategy
+
+The CNN probability is injected into the prompt:
+
+"This chest X-ray has a predicted pneumonia probability of X.XX. Generate a structured radiology report with Findings and Impression."
+
+This enables hybrid decision-aware report generation.
+
+---
+
+### 4. Report Generation
+
+- Images converted to PIL format
+- Tokenized using BLIP processor
+- Text generated via autoregressive decoding
+- Max length = 200 tokens
+
+---
+
+### 5. Output
+
+Reports saved in CSV format including:
+- Image index
+- Ground truth label
+- CNN prediction
+- CNN confidence
+- Generated report text
+
+---
+
+## System Constraints
+
+- CPU-only execution
+- No fine-tuning performed
+- Zero-shot report generation
+
+---
+
+## Limitations
+
+- BLIP is trained on general image-text pairs, not radiology-specific corpora
+- Not medically validated
+- Reports may lack clinical accuracy
+
+---
+
+## Future Improvements
+
+- Use domain-adapted models (e.g., medical VLMs)
+- Fine-tune on radiology report datasets
+- Add evaluation metrics (BLEU, ROUGE, BERTScore)
+- Integrate uncertainty quantification
+
+---
+
+## Conclusion
+
+This implementation demonstrates multimodal AI integration by combining CNN classification outputs with a vision-language model for automated radiology report generation under CPU constraints.

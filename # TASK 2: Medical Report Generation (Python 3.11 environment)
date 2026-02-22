@@ -1,0 +1,18 @@
+This module generates structured radiology reports by conditioning a BLIP vision-language model on the diagnostic outputs from the Task 1 CNN classifier.
+1. Install Dependencies Ensure you have the required libraries installed using the provided requirements file:
+Bash
+
+pip install -r requirements.txt
+
+2. Data Requirements The script expects a task1_output/ directory containing:
+
+    test_predictions.csv: Model predictions and confidence scores.
+
+    misclassified_images.npz: Compressed NumPy array of images and labels for error analysis.
+
+3. Execution Run the generator script to process misclassified images and output the final reports:
+Bash
+
+python report_generator.py
+
+4. Outputs The system will create a task2_output/ folder containing generated_reports.csv, which includes the image index, true label, CNN prediction, and the VLM-generated radiology text.
